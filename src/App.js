@@ -40,6 +40,21 @@ class App extends React.Component {
     }));
   };
 
+  componentDidMount() {
+    const localStorageContacts = JSON.parse(localStorage.getItem("contacts"));
+    if (localStorageContacts) {
+      this.setState({
+        contacts: localStorageContacts,
+      });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state !== prevState) {
+      localStorage.setItem("contacts", JSON.stringify(this.state.contacts));
+    }
+  }
+
   render() {
     const { contacts, filter } = this.state;
     const { addContact, handleFilterChange } = this;
